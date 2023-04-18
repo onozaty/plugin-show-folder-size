@@ -103,19 +103,6 @@ final class show_folder_size extends rcube_plugin
                 ],
             ], $skin);
         }
-
-        if ($this->config->get('show_toolbar_button')) {
-            $this->add_plugin_buttons_toolbar([
-                [
-                    'type' => 'link',
-                    'label' => "{$this->ID}.show_folder_size",
-                    'title' => "{$this->ID}.show_folder_size (longer)",
-                    'class' => 'show-folder-size',
-                    'href' => '#',
-                    'onclick' => 'plugin_show_folder_size()',
-                ],
-            ], $skin);
-        }
     }
 
     /**
