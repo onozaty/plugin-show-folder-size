@@ -1,8 +1,3 @@
-const debug = false;
-
-const $ = global.$;
-const rcmail = global.rcmail;
-
 /**
  * The jQuery selector for "Show folder size" buttons.
  *
@@ -34,13 +29,35 @@ const plugin_show_folder_size = () => {
  * @param {Object.<string, string|Number>} resp the response, { mailbox: size }
  */
 const callback_show_folder_size = (resp) => {
-  if (debug) {
-    console.log('callback_show_folder_size', resp);
-  }
 
-  $.each(resp, (mailbox, size) => {
-    get_mailbox_a(mailbox).attr('data-folder-size', `(${size})`);
-  });
+  const table = $('<table id="show-folder-size-table">');
+  table.append($('<tr><th>Name</th><th>Size</th></tr>'));
+
+  let totalSize = 0;
+
+  for (let index = 0; index < rcmail.env.mailboxes_list.length; index++) {
+      const mailboxId = rcmail.env.mailboxes_list[index];
+      const mailbox = rcmail.env.mailboxes[mailboxId];
+      const size = resp[mailboxId];
+  
+      // 階層をチェック
+      const level = mailboxId.split('.').length;
+  
+      const tr = $('<tr>');
+      tr.append($('<td>').text('\u00A0\u00A0'.repeat(level - 1) + mailbox.name));
+      tr.append($('<td class="folder-size">').text(size.toLocaleString()));
+      table.append(tr);
+
+      totalSize += size;
+  }
+  
+  // 合計行
+  const tr = $('<tr class="total-folder-size">');
+  tr.append($('<td class="total-folder">').text('Total'));
+  tr.append($('<td class="folder-size">').text(totalSize.toLocaleString()));
+  table.append(tr);
+  
+  rcmail.show_popup_dialog(table, 'Folder Size');
 
   $(plugin_button_selector).removeClass('disabled');
 };

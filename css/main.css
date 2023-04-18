@@ -1,0 +1,30 @@
+table#show-folder-size-table {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border: 1px #c0c0c0 solid;
+  border-collapse: collapse;
+}
+
+#show-folder-size-table th,
+#show-folder-size-table td {
+  border: 1px #c0c0c0 solid;
+  padding: 2px 4px;
+}
+
+#show-folder-size-table th {
+  background-color: #e8e8e8;
+}
+
+#show-folder-size-table tr:hover {
+  background-color: #f0f0f0;
+}
+
+#show-folder-size-table td.folder-size {
+  text-align: right;
+}
+
+#show-folder-size-table tr.total-folder-size {
+  font-weight: bold;
+}

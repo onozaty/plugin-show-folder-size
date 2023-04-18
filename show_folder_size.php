@@ -49,14 +49,7 @@ final class show_folder_size extends rcube_plugin
         $folders = rcube_utils::get_input_value('_folders', rcube_utils::INPUT_POST) ?: '__ALL__';
         $folders = $folders === '__ALL__' ? $storage->list_folders() : (array) $folders;
 
-        // sanitize: _humanize
-        $humanize = \filter_var(
-            rcube_utils::get_input_value('_humanize', rcube_utils::INPUT_POST),
-            \FILTER_VALIDATE_BOOLEAN
-        );
-        $humanize = isset($humanize) ? $humanize : true;
-
-        $sizes = $this->get_folder_size($folders, $humanize);
+        $sizes = $this->get_folder_size($folders);
 
         $output->command('plugin.callback_folder_size', $sizes);
         $output->send();
@@ -82,8 +75,9 @@ final class show_folder_size extends rcube_plugin
      */
     private function add_plugin_assets($skin)
     {
+        $this->include_stylesheet("css/main.css");
         $this->include_stylesheet("skins/{$skin}/main.css");
-        $this->include_script('js/main.min.js');
+        $this->include_script('js/main.js');
 
         if ($this->config->get('auto_show_folder_size')) {
             $this->include_script('js/exec.min.js');
