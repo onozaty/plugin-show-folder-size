@@ -19,6 +19,3 @@ skins/_src/ export-ignore
 terser.json export-ignore
 tests/ export-ignore
 yarn.lock export-ignore
-
-js/exec.js export-ignore
-js/main.js export-ignore
